@@ -63,6 +63,11 @@
         </config-file>
 
         <source-file src="src/android/Device.java" target-dir="src/org/apache/cordova/device" />
+	    
+	<config-file target="AndroidManifest.xml" parent="/manifest">
+            <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+            <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+	</config-file>
     </platform>
 
     <!-- amazon-fireos -->
