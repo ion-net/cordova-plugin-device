@@ -72,10 +72,19 @@ public class Device extends CordovaPlugin {
      * @return                  True if the action was valid, false if not.
      */
     public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
+		String IMEI = null;
+        
+		TelephonyManager tm = (TelephonyManager) this.cordova.getActivity().getSystemService(Context.TELEPHONY_SERVICE);
+		IMEI = tm.getDeviceId();
+
+        if (IMEI == null || IMEI.length() == 0) {
+            IMEI = "0";
+        }
+		
         if ("getDeviceInfo".equals(action)) {
             JSONObject r = new JSONObject();
             r.put("uuid", Device.uuid);
-	    r.put("imei", this.getIMEI());
+			r.put("imei", IMEI);
             r.put("version", this.getOSVersion());
             r.put("platform", this.getPlatform());
             r.put("model", this.getModel());
@@ -114,22 +123,6 @@ public class Device extends CordovaPlugin {
      *
      * @return
      */
-	
-    public String getIMEI() {
-		if(telephony == null) {
-            telephony = TelephonyManager.get(cordova.getActivity());
-		}
-
-        String IMEI = null;
-            TelephonyManager telephonyManager = (TelephonyManager) this.cordova.getActivity().getSystemService(Context.TELEPHONY_SERVICE);
-		IMEI = telephonyManager.getDeviceId();
-
-        if (IMEI == null || IMEI.length() == 0) {
-            IMEI = "0";
-        }
-
-        return IMEI;
-    }
 	
     public String getUuid() {
         String uuid = Settings.Secure.getString(this.cordova.getActivity().getContentResolver(), android.provider.Settings.Secure.ANDROID_ID);
