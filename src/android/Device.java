@@ -28,6 +28,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.content.Context;
+import android.content.Intent;
+import android.telephony.TelephonyManager;
+import android.util.Log;
 import android.provider.Settings;
 
 public class Device extends CordovaPlugin {
