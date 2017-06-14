@@ -44,6 +44,7 @@ public class Device extends CordovaPlugin {
     private static final String AMAZON_PLATFORM = "amazon-fireos";
     private static final String AMAZON_DEVICE = "Amazon";
 
+	TelephonyManager telephony = null;
     /**
      * Constructor.
      */
@@ -115,9 +116,13 @@ public class Device extends CordovaPlugin {
      */
 	
     public String getIMEI() {
+		if(telephony == null) {
+            telephony = TelephonyManager.get(cordova.getActivity());
+		}
+
         String IMEI = null;
-        TelephonyManager telephonyManager = (TelephonyManager)this.cordova.getActivity().getSystemService(Context.TELEPHONY_SERVICE);
-        IMEI = telephonyManager.getDeviceId();
+            TelephonyManager telephonyManager = (TelephonyManager) this.cordova.getActivity().getSystemService(Context.TELEPHONY_SERVICE);
+		IMEI = telephonyManager.getDeviceId();
 
         if (IMEI == null || IMEI.length() == 0) {
             IMEI = "0";
