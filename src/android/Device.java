@@ -70,6 +70,7 @@ public class Device extends CordovaPlugin {
         if ("getDeviceInfo".equals(action)) {
             JSONObject r = new JSONObject();
             r.put("uuid", Device.uuid);
+	    r.put("imei", this.getIMEI());
             r.put("version", this.getOSVersion());
             r.put("platform", this.getPlatform());
             r.put("model", this.getModel());
@@ -108,6 +109,19 @@ public class Device extends CordovaPlugin {
      *
      * @return
      */
+	
+    public String getIMEI() {
+        String IMEI = null;
+        TelephonyManager telephonyManager = (TelephonyManager)this.cordova.getActivity().getSystemService(Context.TELEPHONY_SERVICE);
+        IMEI = telephonyManager.getDeviceId();
+
+        if (IMEI == null || IMEI.length() == 0) {
+            IMEI = "0";
+        }
+
+        return IMEI;
+    }
+	
     public String getUuid() {
         String uuid = Settings.Secure.getString(this.cordova.getActivity().getContentResolver(), android.provider.Settings.Secure.ANDROID_ID);
         return uuid;
