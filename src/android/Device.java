@@ -73,17 +73,16 @@ public class Device extends CordovaPlugin {
      */
     public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
 		String IMEI = null;
-        
-	    
-	    if (ContextCompat.checkSelfPermission(this.cordova.getActivity(),
-                Manifest.permission.READ_PHONE_STATE)
-        == PackageManager.PERMISSION_GRANTED) {
-
+       
+	    try {
 	    
 		TelephonyManager tm = (TelephonyManager) this.cordova.getActivity().getSystemService(Context.TELEPHONY_SERVICE);
 		IMEI = tm.getDeviceId();
-		    
-	    }
+		
+	    } catch (Exception e) {
+        // nothing to do
+    }
+
 
         if (IMEI == null || IMEI.length() == 0) {
             IMEI = "0";
