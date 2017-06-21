@@ -75,7 +75,7 @@ public class Device extends CordovaPlugin {
 		String IMEI = null;
         
 	    
-	    if (ContextCompat.checkSelfPermission(thisActivity,
+	    if (ContextCompat.checkSelfPermission(this.cordova.getActivity(),
                 Manifest.permission.READ_PHONE_STATE)
         == PackageManager.PERMISSION_GRANTED) {
 
